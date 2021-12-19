@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@700&display=swap");
+body {
+  font-family: "Signika", sans-serif;
+  background-color: #181818;
+
+  display: grid;
+  min-height: 100vh;
+
+  grid-template-rows: auto 1fr auto;
+}
+
+.nav_logo {
+  a {
+    margin: 0px;
+    font-size: 30px;
+    color: white;
+
+    text-decoration: none;
+    color: white;
+
+    span {
+      background-color: white;
+      padding: 5px;
+      border-radius: 10px;
+      color: #181818;
+    }
+  }
+}
+.nav_form {
+  background-color: white;
+  border-radius: 10px;
+
+  
+  
+  
+  form{
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  form > input {
+    border: none;
+    padding: 3px;
+    font-size: 16px;
+    outline: none;
+
+    border-radius: 15px;
+    
+
+  }
+
+  form > button {
+    border: none;
+    font-size: 20px;
+    border-radius: 0px 10px 10px 0px;
+
+    height: 34px;
+    &:active {
+      background-color: #48995d;
+      color: white;
+    }
+  }
+}
+
+#root {
+  min-width: 50vh;
+}
+
+footer {
+  background-color: #48995d;
+
+  div {
+    display: flex;
+    align-items: center;
+    color: white;
+    h3 {
+      width: auto;
+      margin: 0px 0px 0px 10px;
+      span {
+        background-color: white;
+        padding: 5px;
+        border-radius: 10px;
+        color: #181818;
+      }
+    }
+
+    p {
+      text-align: center;
+      width: 70%;
+
+      i {
+        font-size: 40px;
+        margin-left: 10px;
+      }
+    }
+  }
+}

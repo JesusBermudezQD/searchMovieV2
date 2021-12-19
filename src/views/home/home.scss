@@ -1,0 +1,155 @@
+.hero {
+  background: linear-gradient(
+      to right,
+      rgba(64, 85, 69, 0.9),
+      rgba(102, 162, 117, 0.9)
+    ),
+    url("https://i.imgur.com/xnh5x47.jpg");
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50vh;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  padding: 25px;
+  section {
+    color: white;
+    h2 {
+      font-size: 50px;
+    }
+  }
+}
+.scroll {
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #48995d;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #48995d;
+  }
+}
+.activa {
+  background: #48995d;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.populares {
+  padding: 25px;
+  height: auto;
+
+  .opciones {
+    display: flex;
+    color: white;
+    align-content: center;
+
+    ul {
+      display: flex;
+      align-items: center;
+
+      margin: 0px;
+    }
+
+    ul > li {
+      list-style: none;
+      margin-left: 15px;
+    }
+
+    ul > li > a {
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+
+      &:hover {
+        @extend .activa;
+      }
+    }
+  }
+  hr {
+    color: #48995d;
+    height: 2px;
+  }
+
+
+  .populares_cards {
+    height: 350px;
+    display: flex;
+    overflow: auto;
+    gap: 15px;
+  
+    @extend .scroll;
+  }
+
+}
+
+
+
+
+
+.tarjeta {
+  height: auto;
+  border-radius: 10px;
+  background-color: transparent;
+
+  .card_img {
+    width: 100%;
+    height: 250px;
+    img {
+      width: 170px;
+      height: 250px;
+      border-radius: 10px 10px 0px 0px;
+    }
+  }
+
+  .card_desc {
+    margin-left: 5px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    grid-template-areas:
+      "name  name"
+      "date  point";
+    h2 {
+      margin-top: 5px;
+      margin-bottom: 0px;
+      color: white;
+      font-size: 14px;
+      grid-area: name;
+    }
+    p {
+      color: #48995d;
+      font-size: 12px;
+      grid-area: date;
+    }
+    span {
+      margin-top: 5px;
+      grid-area: point;
+      width: 28px;
+      height: 20px;
+      border: 1px solid black
+    }
+  }
+}
+
+
+.tendencias{
+  @extend .populares;
+
+  .tendencias_cards{
+    @extend .populares_cards;
+  }
+}
