@@ -1,5 +1,11 @@
+$breakpoints:(
+    sm:540px,
+    md:768px,
+    lg:1024px
+);
+
 @mixin phone {
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 540px) {
     @content;
   }
 }
@@ -68,10 +74,11 @@
   #content {
     height: auto;
     display: grid;
-    
+    width: auto;
     justify-items: center;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 5px;
+    
+    grid-template-columns: repeat(6, 218px);
+    gap: 0px;
   }
 
   @include phone {
