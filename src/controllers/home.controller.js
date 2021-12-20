@@ -2,28 +2,28 @@ import view from "../views/home/home.html";
 import "../views/home/home.scss";
 
 const KEY = "472732f60fa6068083309688ed65b74f";
-const URLPopularMovie = `https://api.themoviedb.org/3/movie/popular?api_key=${KEY}&language=es`;
-const URLPopularTv = `https://api.themoviedb.org/3/tv/popular?api_key=${KEY}&language=es`;
-const URLTrendingMovie=`https://api.themoviedb.org/3/trending/movie/day?api_key=${KEY}&language=es`;
-const URLTrendingTv=`https://api.themoviedb.org/3/trending/tv/day?api_key=${KEY}&language=es`;
-const URLSearchMovie=`https://api.themoviedb.org/3/search/movie?api_key=${KEY}`;
+const BaseUrl = "https://api.themoviedb.org/3/";
+const URLPopularMovie = `${BaseUrl}movie/popular?api_key=${KEY}&language=es`;
+const URLPopularTv = `${BaseUrl}tv/popular?api_key=${KEY}&language=es`;
+const URLTrendingMovie = `${BaseUrl}trending/movie/day?api_key=${KEY}&language=es`;
+const URLTrendingTv = `${BaseUrl}trending/tv/day?api_key=${KEY}&language=es`;
+const URLSearchMovie = `${BaseUrl}search/movie?api_key=${KEY}`;
 
 const getData = async (url) => {
   const respuesta = await fetch(url);
   return await respuesta.json();
 };
 
-const pintarData = async (div, url,caso) => {
-  let cars=document.createElement("div");
+const pintarData = async (div, url, caso) => {
+  let cars = document.createElement("div");
 
-  if(caso===1) cars=div.querySelector("#populares_cards");
-  if(caso===2) cars=div.querySelector("#tendencias_cards");
-
+  if (caso === 1) cars = div.querySelector("#populares_cards");
+  if (caso === 2) cars = div.querySelector("#tendencias_cards");
 
   cars.innerHTML = "";
 
   const { results } = await getData(url);
-  console.log(results);
+  // console.log(results);
   results.forEach((data) => {
     let point = "";
     if (data.vote_average >= 7.0) point = "bg-success";
@@ -41,7 +41,9 @@ const pintarData = async (div, url,caso) => {
     <div class="card_desc">
       <h2>${data.title ? data.title : data.name}</h2>
       <p>${data.release_date ? data.release_date : data.first_air_date}</p>
-      <span class="position-absolute top-0 p-1 start-90 badge rounded-pill ${point}">${data.vote_average}</span>
+      <span class="position-absolute top-0 p-1 start-90 badge rounded-pill ${point}">${
+      data.vote_average
+    }</span>
   
     </div>
 
@@ -66,46 +68,41 @@ export default async () => {
 
   const ulOpciones = div.querySelector("#opciones_list");
   const ulTendencias = div.querySelector("#tendencias_list");
-  const form=document.querySelector("#form");
+ 
 
   addActiva(ulOpciones, "Television");
-  addActiva(ulTendencias,"Television");
+  addActiva(ulTendencias, "Television");
 
-  pintarData(div, URLPopularTv,1);
-  pintarData(div, URLTrendingTv,2);
+  pintarData(div, URLPopularTv, 1);
+  pintarData(div, URLTrendingTv, 2);
 
-
-  ulOpciones.addEventListener("click",  (e) => {
+  ulOpciones.addEventListener("click", (e) => {
     const ulArray = ["Television", "Cines"];
     if (ulArray.indexOf(e.target.outerText) !== -1) {
       if (e.target.outerText === "Television") {
         addActiva(ulOpciones, "Television");
-        pintarData(div, URLPopularTv,1);
+        pintarData(div, URLPopularTv, 1);
       } else if (e.target.outerText === "Cines") {
         addActiva(ulOpciones, "Cines");
-        pintarData(div, URLPopularMovie,1);
+        pintarData(div, URLPopularMovie, 1);
       }
     }
   });
 
-  ulTendencias.addEventListener("click",  (e) => {
+  ulTendencias.addEventListener("click", (e) => {
     const ulArray = ["Television", "Cines"];
     if (ulArray.indexOf(e.target.outerText) !== -1) {
       if (e.target.outerText === "Television") {
         addActiva(ulTendencias, "Television");
-        pintarData(div, URLTrendingTv,2);
+        pintarData(div, URLTrendingTv, 2);
       } else if (e.target.outerText === "Cines") {
         addActiva(ulTendencias, "Cines");
-        pintarData(div, URLTrendingMovie,2);
+        pintarData(div, URLTrendingMovie, 2);
       }
     }
   });
 
-  form.addEventListener("submit",(e)=>{
-    e.preventDefault();
-    console.log(e.target[0].value);
-
-  })
+  
 
   return div;
 };

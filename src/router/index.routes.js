@@ -18,6 +18,7 @@ const route = async(route) => {
     case "#/peliculas":
       return content.appendChild(await Peliculas());
 
+    
     default:
       return console.log("404");
   }

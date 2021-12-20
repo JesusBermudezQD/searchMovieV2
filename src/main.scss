@@ -9,6 +9,31 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
+*{
+  
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 5px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: white;
+      border-radius: 10px;
+    }
+  
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #48995d;
+      border-radius: 10px;
+    }
+  
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #48995d;
+    }
+  
+}
+
 .nav_logo {
   a {
     margin: 0px;
@@ -69,7 +94,7 @@ body {
 
 footer {
   background-color: #48995d;
-
+  height: auto;
   div {
     display: flex;
     align-items: center;
@@ -96,3 +121,5 @@ footer {
     }
   }
 }
+
+
