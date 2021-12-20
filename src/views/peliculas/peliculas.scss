@@ -1,5 +1,5 @@
 @mixin sm {
-  @media only screen and (max-width: 767.98px) {
+  @media only screen and (max-width: 480px) {
     @content;
   }
 }
@@ -82,9 +82,23 @@
     gap: 10px;
   }
 
-  @include sm {
+
+  @media(max-width:480px) {
     #content {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width:481px)and(max-width:800px) {
+    #content {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+
+  @media (min-width:801px)and(max-width:1030px) {
+    #content {
+      grid-template-columns: repeat(5, 1fr);
     }
   }
 
@@ -128,7 +142,8 @@
       height: auto;
       border-radius: 10px 10px 0px 0px;
     }
-    @include sm {
+
+    @media(max-width:480px) {
       & {
         width: 150px;
       }
