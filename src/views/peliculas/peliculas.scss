@@ -1,14 +1,15 @@
-$breakpoints:(
-    sm:540px,
-    md:768px,
-    lg:1024px
-);
-
-@mixin phone {
-  @media only screen and (max-width: 540px) {
+@mixin sm {
+  @media only screen and (max-width: 767.98px) {
     @content;
   }
 }
+
+@mixin md {
+  @media only screen and (max-width: 991.98px) {
+    @content;
+  }
+}
+
 
 .activa {
   background: #48995d;
@@ -46,7 +47,7 @@ $breakpoints:(
       }
     }
 
-    @include phone {
+    @include sm {
       & {
         flex-direction: column;
         padding: 0;
@@ -76,16 +77,20 @@ $breakpoints:(
     display: grid;
     width: auto;
     justify-items: center;
-    
-    grid-template-columns: repeat(6, 218px);
-    gap: 0px;
+
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
   }
 
-  @include phone {
+  @include sm {
     #content {
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  
+
+  
 
   .buttonMas {
     width: 100%;
@@ -109,20 +114,26 @@ $breakpoints:(
   width: 170px;
   border-radius: 10px;
   background-color: transparent;
-
- 
+  @include sm {
+    & {
+      width: 150px;
+    }
+  }
 
   .card_img {
-    width: auto;
+    width: 170px;
     height: 250px;
     img {
       width: 170px;
-      height: 250px;
+      height: auto;
       border-radius: 10px 10px 0px 0px;
     }
-    @include phone {
+    @include sm {
+      & {
+        width: 150px;
+      }
       img {
-        width: 158px;
+        width: 150px;
         height: 230px;
       }
     }
@@ -131,21 +142,22 @@ $breakpoints:(
   .card_desc {
     margin-left: 5px;
     display: grid;
-    grid-template-columns: 120px 1fr;
-    grid-template-areas:
-      "name  name"
-      "date  point";
+    grid-template-rows: auto;
+
+    @include sm {
+      h2 {
+        width: 98%;
+      }
+    }
     h2 {
       margin-top: 5px;
       margin-bottom: 0px;
       color: white;
       font-size: 14px;
-      grid-area: name;
     }
     p {
       color: #48995d;
       font-size: 12px;
-      grid-area: date;
     }
     span {
       margin-top: 5px;
