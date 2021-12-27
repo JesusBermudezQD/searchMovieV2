@@ -98,10 +98,15 @@
 }
 
 
+a{
+  text-decoration: none;
+}
 
 
 
 .tarjeta {
+
+  cursor: pointer;
   height: auto;
   border-radius: 10px;
   background-color: transparent;

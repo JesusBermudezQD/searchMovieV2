@@ -14,7 +14,7 @@ const getData = async (url) => {
   return await respuesta.json();
 };
 
-const pintarData = async (div, url, caso) => {
+const pintarData = async (div, url, caso, tipo) => {
   let cars = document.createElement("div");
 
   if (caso === 1) cars = div.querySelector("#populares_cards");
@@ -23,7 +23,7 @@ const pintarData = async (div, url, caso) => {
   cars.innerHTML = "";
 
   const { results } = await getData(url);
-  // console.log(results);
+
   results.forEach((data) => {
     let point = "";
     if (data.vote_average >= 7.0) point = "bg-success";
@@ -33,7 +33,11 @@ const pintarData = async (div, url, caso) => {
       point = "bg-danger";
 
     cars.innerHTML += `
-    <div class="tarjeta position-relative">
+
+    <a onclick="localStorage.setItem('idCard',${data.id})" href='#/detalles/${
+      tipo == "movie" ? "movie" : "tv"
+    }&id=${data.id}'>
+    <div class="tarjeta position-relative" >
     <div class="card_img">
       <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="" />
     </div>
@@ -48,6 +52,8 @@ const pintarData = async (div, url, caso) => {
     </div>
 
   </div>
+    </a>
+    
 
     `;
   });
@@ -68,7 +74,6 @@ export default async () => {
 
   const ulOpciones = div.querySelector("#opciones_list");
   const ulTendencias = div.querySelector("#tendencias_list");
- 
 
   addActiva(ulOpciones, "Television");
   addActiva(ulTendencias, "Television");
@@ -81,10 +86,10 @@ export default async () => {
     if (ulArray.indexOf(e.target.outerText) !== -1) {
       if (e.target.outerText === "Television") {
         addActiva(ulOpciones, "Television");
-        pintarData(div, URLPopularTv, 1);
+        pintarData(div, URLPopularTv, 1, "tv");
       } else if (e.target.outerText === "Cines") {
         addActiva(ulOpciones, "Cines");
-        pintarData(div, URLPopularMovie, 1);
+        pintarData(div, URLPopularMovie, 1, "movie");
       }
     }
   });
@@ -94,15 +99,13 @@ export default async () => {
     if (ulArray.indexOf(e.target.outerText) !== -1) {
       if (e.target.outerText === "Television") {
         addActiva(ulTendencias, "Television");
-        pintarData(div, URLTrendingTv, 2);
+        pintarData(div, URLTrendingTv, 2, "tv");
       } else if (e.target.outerText === "Cines") {
         addActiva(ulTendencias, "Cines");
-        pintarData(div, URLTrendingMovie, 2);
+        pintarData(div, URLTrendingMovie, 2, "movie");
       }
     }
   });
-
-  
 
   return div;
 };
