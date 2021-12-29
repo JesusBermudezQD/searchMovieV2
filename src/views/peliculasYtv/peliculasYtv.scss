@@ -1,15 +1,3 @@
-@mixin sm {
-  @media only screen and (max-width: 500px) {
-    @content;
-  }
-}
-
-@mixin md {
-  @media only screen and (max-width: 991.98px) {
-    @content;
-  }
-}
-
 .activa {
   background: #48995d;
   padding: 10px;
@@ -96,7 +84,7 @@
     }
   }
 
-  @media (min-width: 801px) and(max-width:1030px) {
+  @media (min-width: 801px) and(max-width:1080px) {
     #content {
       grid-template-columns: repeat(5, 1fr);
     }
