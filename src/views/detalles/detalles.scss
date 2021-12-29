@@ -14,9 +14,9 @@
   padding: 20px;
   display: flex;
 
-  @include sm{
-      flex-direction: column;
-      align-items: center;
+  @include sm {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -27,17 +27,17 @@
     border-radius: 10px;
   }
 
-  @include sm{
-    img{
-        margin-bottom: 20px;
+  @include sm {
+    img {
+      margin-bottom: 20px;
     }
-}
+  }
 }
 
 .contenedorData {
   padding: 0px 20px;
   color: white;
-
+  width: 100%;
   .header {
     display: flex;
 
@@ -47,14 +47,16 @@
       font-size: 40px;
     }
 
+    p {
+      color: gray;
+      font-size: 15px;
+    }
+
     span {
       font-size: 19px;
       height: 28px;
       margin-left: auto;
     }
-
-    
-    
   }
 
   .fecha {
@@ -66,11 +68,118 @@
     color: #48995d;
   }
 
-  @include sm{
-      padding: 0px;
+  @include sm {
+    padding: 0px;
+  }
+
+  p {
+    text-align: justify;
+  }
 }
 
-p{
-    text-align: justify;
+.scroll {
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #48995d;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #48995d;
+  }
 }
+
+.similares{
+  margin: 0 20px 20px 20px;
+  h4{
+    color: white;
+  }
+
+
+  .similares_cards {
+    height: 350px;
+    display: flex;
+    overflow: auto;
+    gap: 15px;
+  
+    @extend .scroll;
+  
+    .tarjetaSimilar {
+      cursor: pointer;
+      height: auto;
+      border-radius: 10px;
+      background-color: transparent;
+  
+      .card_img {
+        width: 100%;
+        height: 250px;
+        img {
+          width: 170px;
+          height: 250px;
+          border-radius: 10px 10px 0px 0px;
+  
+          @include sm {
+            width: 150px;
+            height: 230px;
+          }
+        }
+  
+        
+      }
+  
+      .card_desc {
+        margin-left: 5px;
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        grid-template-areas:
+          "name  name"
+          "date  point";
+        h2 {
+          margin-top: 5px;
+          margin-bottom: 0px;
+          color: white;
+          font-size: 14px;
+          grid-area: name;
+        }
+        p {
+          color: #48995d;
+          font-size: 12px;
+          grid-area: date;
+        }
+        span {
+          margin-top: 5px;
+          grid-area: point;
+          width: 28px;
+          height: 20px;
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+}
+
+.modal-body{
+  color: gray;
+}
+
+.trailerBtn{
+  color: white;
+  background: #48995d;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+
+  &:active{
+    background: #2f643e;
+  }
 }

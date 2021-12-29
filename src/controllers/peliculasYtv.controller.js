@@ -29,7 +29,7 @@ const addActiva = (ul, text) => {
   }
 };
 
-const card = (data) => {
+const card = (data,tipo) => {
   const div = document.createElement("div");
   div.setAttribute("class", "tarjeta position-relative");
 
@@ -39,6 +39,10 @@ const card = (data) => {
   if (data.vote_average >= 0.0 && data.vote_average < 4.0) point = "bg-danger";
 
   div.innerHTML = `
+
+  <a onclick="localStorage.setItem('idCard',${data.id})" href='#/detalles/${
+    tipo == "movie" ? "movie" : "tv"
+  }&id=${data.id}'>
   <div class="card_img">
     <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="" />
   </div>
@@ -50,12 +54,14 @@ const card = (data) => {
     data.vote_average
   }</span>
 
-  </div>`;
+  </div>
+  </a>
+  `;
 
   return div;
 };
 
-const pintarData = async (div, url, caso) => {
+const pintarData = async (div, url, caso,tipo) => {
   const cards = div.querySelector("#content");
 
   if (caso === 1) cards.innerHTML = "";
@@ -67,7 +73,7 @@ const pintarData = async (div, url, caso) => {
   // console.log(total_pages);
   results.forEach((data) => {
     // console.log(card(data));
-    cards.appendChild(card(data));
+    cards.appendChild(card(data,tipo));
   });
 };
 
@@ -98,7 +104,7 @@ export default async () => {
     opciones.appendChild(ulOpciones);
 
     addActiva(ulOpciones, "Populares");
-    pintarData(div, URLPopular, 1);
+    pintarData(div, URLPopular, 1,"movie");
   } else if (window.location.hash === "#/television") {
     ulOpciones.innerHTML = `
       <li><a>Populares</a></li>
@@ -109,7 +115,7 @@ export default async () => {
     opciones.appendChild(titulo);
     opciones.appendChild(ulOpciones);
     addActiva(ulOpciones, "Populares");
-    pintarData(div, URLPopularTv, 1);
+    pintarData(div, URLPopularTv, 1,"tv");
   }
 
   ulOpciones.addEventListener("click", (e) => {
@@ -125,16 +131,16 @@ export default async () => {
         switch (e.target.outerText) {
           case "Populares":
             addActiva(ulOpciones, "Populares");
-            pintarData(div, URLPopular, 1);
+            pintarData(div, URLPopular, 1,"movie");
             break;
           case "En cartelera":
             addActiva(ulOpciones, "En cartelera");
-            pintarData(div, URLCartelera, 1);
+            pintarData(div, URLCartelera, 1,"movie");
             break;
 
           case "Proximamente":
             addActiva(ulOpciones, "Proximamente");
-            pintarData(div, URLProximamente, 1);
+            pintarData(div, URLProximamente, 1,"movie");
             break;
           default:
             break;
@@ -143,16 +149,16 @@ export default async () => {
         switch (e.target.outerText) {
           case "Populares":
             addActiva(ulOpciones, "Populares");
-            pintarData(div, URLPopularTv, 1);
+            pintarData(div, URLPopularTv, 1,"tv");
             break;
           case "Emision":
             addActiva(ulOpciones, "Emision");
-            pintarData(div, URLEmisionTv, 1);
+            pintarData(div, URLEmisionTv, 1,"tv");
             break;
 
           case "Emision hoy":
             addActiva(ulOpciones, "Emision hoy");
-            pintarData(div, URLEmisionHoyTv, 1);
+            pintarData(div, URLEmisionHoyTv, 1,"tv");
             break;
           default:
             break;
