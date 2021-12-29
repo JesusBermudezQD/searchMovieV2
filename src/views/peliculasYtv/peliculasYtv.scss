@@ -34,7 +34,8 @@
       }
     }
 
-    @include sm {
+    
+    @media (max-width: 500px)  {
       & {
         flex-direction: column;
         padding: 0;
@@ -112,7 +113,8 @@
   width: 170px;
   border-radius: 10px;
   background-color: transparent;
-  @include sm {
+  
+  @media (max-width: 500px)  {
     & {
       width: 150px;
     }
@@ -143,7 +145,7 @@
     display: grid;
     grid-template-rows: auto;
 
-    @include sm {
+    @media (max-width: 500px) {
       h2 {
         width: 98%;
       }
