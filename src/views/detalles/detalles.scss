@@ -1,0 +1,76 @@
+@mixin sm {
+  @media only screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media only screen and (max-width: 991.98px) {
+    @content;
+  }
+}
+
+.contenedor {
+  padding: 20px;
+  display: flex;
+
+  @include sm{
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+.contenedorImg {
+  img {
+    width: auto;
+    height: 400px;
+    border-radius: 10px;
+  }
+
+  @include sm{
+    img{
+        margin-bottom: 20px;
+    }
+}
+}
+
+.contenedorData {
+  padding: 0px 20px;
+  color: white;
+
+  .header {
+    display: flex;
+
+    align-items: center;
+
+    h3 {
+      font-size: 40px;
+    }
+
+    span {
+      font-size: 19px;
+      height: 28px;
+      margin-left: auto;
+    }
+
+    
+    
+  }
+
+  .fecha {
+    color: #48995d;
+  }
+
+  hr {
+    height: 2px;
+    color: #48995d;
+  }
+
+  @include sm{
+      padding: 0px;
+}
+
+p{
+    text-align: justify;
+}
+}

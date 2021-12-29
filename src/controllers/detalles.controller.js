@@ -25,21 +25,65 @@ const extraerParametros = (url) => {
   );
 };
 
+const pointColor = (vote_average) => {
+  let point = "";
+  if (vote_average >= 7.0) point = "bg-success";
+  if (vote_average >= 4.0 && vote_average < 7.0) point = "bg-warning";
+  if (vote_average >= 0.0 && vote_average < 4.0) point = "bg-danger";
+
+  return point;
+};
+
 export default async (tipo) => {
   const div = document.createElement("div");
   const { id } = extraerParametros(window.location.hash);
-  let res = null;
+  let data = null;
 
   div.innerHTML = view;
 
   if (tipo === "movie") {
-    res = await getData(`${BaseUrl}movie/${id}?api_key=${KEY}&language=es`);
+    data = await getData(`${BaseUrl}movie/${id}?api_key=${KEY}&language=es`);
   } else {
-    res = await getData(`${BaseUrl}tv/${id}?api_key=${KEY}&language=es`);
+    data = await getData(`${BaseUrl}tv/${id}?api_key=${KEY}&language=es`);
   }
 
   //console.log(extraerParametros(window.location.hash));
-  console.log(res);
+  console.log(data);
+
+  const contenedorImg = div.querySelector(".contenedorImg");
+  const contenedorData = div.querySelector(".contenedorData");
+
+  contenedorImg.innerHTML = `
+  <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'>
+  `;
+
+  contenedorData.innerHTML = `
+  <div class="header">
+    <h3>${data.name ? data.name : data.title}</h3>  
+    <span class=" p-1 badge rounded-pill ${pointColor(
+      data.vote_average
+    )}"> ${data.vote_average}</span>
+  </div>
+    
+
+    <div>
+      <span class="fecha">${
+        data.first_air_date ? data.first_air_date : data.release_date
+      }
+      </span>
+      <div>
+    
+      ${data.genres.map((genre) => {
+        return `<span class="mx-1">${genre.name}</span>`;
+      })}
+    </div>
+    </div>
+    
+    <hr>
+    
+    <p>${data.overview}</p>
+  
+  `;
 
   return div;
 };
