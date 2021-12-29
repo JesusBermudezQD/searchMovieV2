@@ -10,7 +10,6 @@
   }
 }
 
-
 .activa {
   background: #48995d;
   padding: 10px;
@@ -82,29 +81,26 @@
     gap: 10px;
   }
 
-
-  @media(max-width:480px) {
+  @media (max-width: 500px) {
+    & {
+      padding: 50px 0px 0px 0px;
+    }
     #content {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (min-width:481px)and(max-width:800px) {
+  @media (min-width: 481px) and(max-width:800px) {
     #content {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-
-  @media (min-width:801px)and(max-width:1030px) {
+  @media (min-width: 801px) and(max-width:1030px) {
     #content {
       grid-template-columns: repeat(5, 1fr);
     }
   }
-
-  
-
-  
 
   .buttonMas {
     width: 100%;
@@ -143,7 +139,7 @@
       border-radius: 10px 10px 0px 0px;
     }
 
-    @media(max-width:480px) {
+    @media (max-width: 480px) {
       & {
         width: 150px;
       }
