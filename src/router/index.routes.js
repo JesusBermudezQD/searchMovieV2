@@ -24,6 +24,14 @@ const route = async (route) => {
     case `#/detalles/tv&id=${localStorage.getItem("idCard")}`:
       return content.appendChild(await Detalles("tv"));
 
+    case `#/search/all&q=${localStorage.getItem("query")}`:
+      return content.appendChild(await PeliculasYtv());
+
+    case `#/search/movie&q=${localStorage.getItem("query")}`:
+      return content.appendChild(await PeliculasYtv());
+
+    case `#/search/tv&q=${localStorage.getItem("query")}`:
+      return content.appendChild(await PeliculasYtv());
     default:
       return console.log("404");
   }

@@ -3,8 +3,13 @@
   padding: 10px;
   border-radius: 10px;
 }
+
+.contenedor{
+  justify-content: center;
+}
+
 .popularesPelicula {
-  padding: 50px 25px 0px 25px;
+  padding: 50px 0px 0px 0px;
   height: auto;
 
   .opciones {
@@ -34,8 +39,7 @@
       }
     }
 
-    
-    @media (max-width: 500px)  {
+    @media (max-width: 500px) {
       & {
         flex-direction: column;
         padding: 0;
@@ -79,15 +83,21 @@
     }
   }
 
-  @media (min-width: 481px) and(max-width:800px) {
+  @media (min-width: 501px) and(max-width:800px) {
     #content {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 
   @media (min-width: 801px) and(max-width:1081px) {
     #content {
       grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (min-width: 1082px) and(max-width:1300px) {
+    #content {
+      grid-template-columns: repeat(6, 1fr);
     }
   }
 
@@ -113,8 +123,8 @@
   width: 170px;
   border-radius: 10px;
   background-color: transparent;
-  
-  @media (max-width: 500px)  {
+
+  @media (max-width: 500px) {
     & {
       width: 150px;
     }

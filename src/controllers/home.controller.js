@@ -68,6 +68,10 @@ const addActiva = (ul, text) => {
   }
 };
 
+const prueba = () => {
+  console.log("desde home");
+};
+
 export default async () => {
   const div = document.createElement("div");
   div.innerHTML = view;

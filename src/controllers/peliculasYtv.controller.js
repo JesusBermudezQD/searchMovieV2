@@ -12,12 +12,28 @@ const URLPopularTv = `${BaseUrl}tv/popular?api_key=${KEY}&language=es`;
 const URLEmisionTv = `${BaseUrl}tv/on_the_air?api_key=${KEY}&language=es`;
 const URLEmisionHoyTv = `${BaseUrl}tv/airing_today?api_key=${KEY}&language=es`;
 
+const URLAll = `${BaseUrl}search/multi?api_key=${KEY}`;
+const URLMovie = `${BaseUrl}search/movie?api_key=${KEY}`;
+const URLTv = `${BaseUrl}search/tv?api_key=${KEY}`;
+
 let limitPages = 1;
 let pages = 1;
 
 const getData = async (url) => {
   const respuesta = await fetch(url);
   return await respuesta.json();
+};
+
+const getActiva = (ul) => {
+  //console.log(ul.children);
+  for (let i = 0; i < ul.children.length; i++) {
+    //ul.children[i].children[0].classList.remove("activa");
+    //console.log(ul.children[i].children[0].getAttribute("class"));
+    if (ul.children[i].children[0].getAttribute("class") === "activa") {
+      return ul.children[i].children[0];
+      //console.log(ul.children[i]);
+    }
+  }
 };
 
 const addActiva = (ul, text) => {
@@ -29,7 +45,7 @@ const addActiva = (ul, text) => {
   }
 };
 
-const card = (data,tipo) => {
+const card = (data, tipo) => {
   const div = document.createElement("div");
   div.setAttribute("class", "tarjeta position-relative");
 
@@ -41,7 +57,7 @@ const card = (data,tipo) => {
   div.innerHTML = `
 
   <a onclick="localStorage.setItem('idCard',${data.id})" href='#/detalles/${
-    tipo == "movie" ? "movie" : "tv"
+    tipo == "movie" || data.title ? "movie" : "tv"
   }&id=${data.id}'>
   <div class="card_img">
     <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="" />
@@ -61,7 +77,7 @@ const card = (data,tipo) => {
   return div;
 };
 
-const pintarData = async (div, url, caso,tipo) => {
+const pintarData = async (div, url, caso, tipo) => {
   const cards = div.querySelector("#content");
 
   if (caso === 1) cards.innerHTML = "";
@@ -73,18 +89,14 @@ const pintarData = async (div, url, caso,tipo) => {
   // console.log(total_pages);
   results.forEach((data) => {
     // console.log(card(data));
-    cards.appendChild(card(data,tipo));
+    cards.appendChild(card(data, tipo));
   });
 };
-
-
-
 
 export default async () => {
   const div = document.createElement("div");
   div.innerHTML = view;
 
-  //const ulOpciones = div.querySelector("#opciones_list");
   const buttonMas = div.querySelector("#buttonMas");
   const opciones = div.querySelector(".opciones");
 
@@ -104,7 +116,7 @@ export default async () => {
     opciones.appendChild(ulOpciones);
 
     addActiva(ulOpciones, "Populares");
-    pintarData(div, URLPopular, 1,"movie");
+    pintarData(div, URLPopular, 1, "movie");
   } else if (window.location.hash === "#/television") {
     ulOpciones.innerHTML = `
       <li><a>Populares</a></li>
@@ -115,7 +127,30 @@ export default async () => {
     opciones.appendChild(titulo);
     opciones.appendChild(ulOpciones);
     addActiva(ulOpciones, "Populares");
-    pintarData(div, URLPopularTv, 1,"tv");
+    pintarData(div, URLPopularTv, 1, "tv");
+  } else if (
+    window.location.hash === `#/search/all&q=${localStorage.getItem("query")}`
+  ) {
+    titulo.innerHTML = `Busqueda de ${localStorage.getItem("query")}`;
+    opciones.appendChild(titulo);
+    pintarData(div, `${URLAll}&query=${localStorage.getItem("query")}`, 1, "");
+  } else if (
+    window.location.hash === `#/search/movie&q=${localStorage.getItem("query")}`
+  ) {
+    titulo.innerHTML = `Busqueda de ${localStorage.getItem("query")}`;
+    opciones.appendChild(titulo);
+    pintarData(
+      div,
+      `${URLMovie}&query=${localStorage.getItem("query")}`,
+      1,
+      ""
+    );
+  } else if (
+    window.location.hash === `#/search/tv&q=${localStorage.getItem("query")}`
+  ) {
+    titulo.innerHTML = `Busqueda de ${localStorage.getItem("query")}`;
+    opciones.appendChild(titulo);
+    pintarData(div, `${URLTv}&query=${localStorage.getItem("query")}`, 1, "");
   }
 
   ulOpciones.addEventListener("click", (e) => {
@@ -131,16 +166,16 @@ export default async () => {
         switch (e.target.outerText) {
           case "Populares":
             addActiva(ulOpciones, "Populares");
-            pintarData(div, URLPopular, 1,"movie");
+            pintarData(div, URLPopular, 1, "movie");
             break;
           case "En cartelera":
             addActiva(ulOpciones, "En cartelera");
-            pintarData(div, URLCartelera, 1,"movie");
+            pintarData(div, URLCartelera, 1, "movie");
             break;
 
           case "Proximamente":
             addActiva(ulOpciones, "Proximamente");
-            pintarData(div, URLProximamente, 1,"movie");
+            pintarData(div, URLProximamente, 1, "movie");
             break;
           default:
             break;
@@ -149,16 +184,16 @@ export default async () => {
         switch (e.target.outerText) {
           case "Populares":
             addActiva(ulOpciones, "Populares");
-            pintarData(div, URLPopularTv, 1,"tv");
+            pintarData(div, URLPopularTv, 1, "tv");
             break;
           case "Emision":
             addActiva(ulOpciones, "Emision");
-            pintarData(div, URLEmisionTv, 1,"tv");
+            pintarData(div, URLEmisionTv, 1, "tv");
             break;
 
           case "Emision hoy":
             addActiva(ulOpciones, "Emision hoy");
-            pintarData(div, URLEmisionHoyTv, 1,"tv");
+            pintarData(div, URLEmisionHoyTv, 1, "tv");
             break;
           default:
             break;
@@ -170,9 +205,71 @@ export default async () => {
   buttonMas.addEventListener("click", () => {
     if (pages <= limitPages) {
       pages = pages + 1;
-      pintarData(div, URLPopular + `&page=${pages}`, 2);
+
+      if (window.location.hash === "#/peliculas") {
+        if (getActiva(ulOpciones).innerText === "Populares")
+          pintarData(div, URLPopular + `&page=${pages}`, 2);
+        if (getActiva(ulOpciones).innerText === "En cartelera")
+          pintarData(div, URLCartelera + `&page=${pages}`, 2);
+        if (getActiva(ulOpciones).innerText === "Proximamente")
+          pintarData(div, URLProximamente + `&page=${pages}`, 2);
+      }
+
+      if (window.location.hash === "#/television") {
+        if (getActiva(ulOpciones).innerText === "Populares")
+          pintarData(div, URLPopularTv + `&page=${pages}`, 2);
+        if (getActiva(ulOpciones).innerText === "Emision")
+          pintarData(div, URLEmisionTv + `&page=${pages}`, 2);
+        if (getActiva(ulOpciones).innerText === "Emision hoy")
+          pintarData(div, URLEmisionHoyTv + `&page=${pages}`, 2);
+      }
+
+      if (
+        window.location.hash ===
+        `#/search/all&q=${localStorage.getItem("query")}`
+      ) {
+        pintarData(
+          div,
+          `${URLAll}&query=${localStorage.getItem("query")}` + `&page=${pages}`,
+          2
+        );
+      }
     }
   });
 
   return div;
 };
+
+// buttonMas.addEventListener("click", () => {
+//   if (pages <= limitPages) {
+//     pages = pages + 1;
+
+//     const ulArray = [
+//       "Populares",
+//       "En cartelera",
+//       "Proximamente",
+//       "Emision",
+//       "Emision hoy",
+//     ];
+//     if (ulArray.indexOf(e.target.outerText) !== -1) {
+//       if (window.location.hash === "#/peliculas") {
+//         switch (e.target.outerText) {
+//           case "Populares":
+//             addActiva(ulOpciones, "Populares");
+//             pintarData(div, URLPopular + `&page=${pages}`, 2);
+//             break;
+//           case "En cartelera":
+//             addActiva(ulOpciones, "En cartelera");
+//             pintarData(div, URLCartelera + `&page=${pages}`, 2);
+//             break;
+
+//           case "Proximamente":
+//             addActiva(ulOpciones, "Proximamente");
+//             pintarData(div, URLProximamente + `&page=${pages}`, 2);
+//             break;
+//           default:
+//             break;
+//         }
+//       }
+//     }
+//   }
